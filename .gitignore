@@ -1,41 +1,44 @@
-# General C++ ignores
-*.o
-*.obj
-*.exe
-*.dll
-*.lib
-*.a
-*.so
-*.dylib
-*.pdb
-*.ilk
-*.exp
-*.ipdb
-*.iobj
-*.log
-
-# CMake-specific ignores
-CMakeCache.txt
-CMakeFiles/
-cmake_install.cmake
-Makefile
-CMakeScripts/
-CTestTestfile.cmake
-
 # Ignore build directories
-_deps/
-/.vs/
 /build/
-*/build/
-out/
-bin/
-lib/
+/build-linux/
+/vcpkg/
+/vcpkg_installed/
+/CMakeCache.txt
+/CMakeFiles/
+/*.vs/
+/.vscode/
+/*.user
+/*.suo
+/*.userosscache
+/*.sln.docstates
 
-# Ignore IDE and OS-specific files
+# Ignore vcpkg-related files
+/vcpkg.lock
+
+# Ignore Visual Studio files
+*.vcxproj*
+*.vcxproj.filters
+*.filters
+*.db
+*.idb
+*.pdb
+*.lib
+*.exp
+*.ilk
+*.sdf
+*.suo
+
+# Ignore CMake generated files
+CMakeLists.txt.user
+CMakeFiles/
+CMakeCache.txt
+
+# Ignore IDE files (VSCode, etc.)
 .vscode/
-.idea/
-.vs/  # Visual Studio folder
-*.swp
-*.swo
+
+# Ignore macOS Finder system files
 .DS_Store
+
+# Ignore Thumbs.db and desktop.ini (Windows-specific)
 Thumbs.db
+desktop.ini
