@@ -2,7 +2,7 @@
 
 #include "Assets/IPathProvider.hpp"
 #include "Assets/ImageLoader.hpp"
-#include "Assets/Asset.hpp""
+#include "Assets/Asset.hpp"
 
 #include <string>
 #include <unordered_map>

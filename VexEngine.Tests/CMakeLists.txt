@@ -2,6 +2,7 @@ add_executable(${VEXENGINE_TESTS_TARGET_NAME}
     src/Chronos/FrameClockTests.cpp
     src/Graphics/GraphicsFactoryTests.cpp
     src/Scenes/SceneManagerTests.cpp
+    src/Platforms/WindowPropertiesTests.cpp
 )
 
 target_include_directories(${VEXENGINE_TESTS_TARGET_NAME}
