@@ -2,6 +2,9 @@
 #include "Assets/AssetManager.hpp"
 #include "Platforms/WindowProperties.hpp"
 #include "Platforms/GLFW/GLFWWindow.hpp"
+#include "Graphics/OpenGL/OpenGLContext.hpp"
+#include "Graphics/OpenGL/OpenGLRenderer.hpp"
+#include "Graphics/IRenderer.hpp"
 
 #include <utility>
 #include <string>
@@ -10,7 +13,6 @@
 namespace VexEngine
 {
 	Application::Application(uint32_t windowWidth, uint32_t windowHeight, const std::string& title) :
-        m_window(std::make_unique<Platforms::GLFWWindow>()),
         m_assetPathProvider(),
         m_assetManager(m_assetPathProvider),
 		m_sceneManager(),
@@ -22,10 +24,18 @@ namespace VexEngine
 
     void Application::Run()
     {
-        m_window->OnInit(m_windowProps);
+        Platforms::GLFWWindow window(m_windowProps);
+        Graphics::OpenGLContext openGLContext;
+        Graphics::OpenGLRenderProps renderProps
+        {
+            .Width = window.GetWidth(),
+            .Height = window.GetHeight(),
+        };
+        Graphics::OpenGLRenderer renderer(renderProps);
+
         m_frameClock.Reset();
 
-        while (m_window->IsOpen())
+        while (window.IsOpen())
         {
             m_frameClock.Tick();
             while (m_frameClock.CanUpdate())
@@ -35,9 +45,9 @@ namespace VexEngine
             }
 
             Update(m_frameClock.GetDelta());
-            Render(m_frameClock.GetAlpha());
+            Render(renderer, m_frameClock.GetAlpha());
 
-            m_window->OnUpdate();
+            window.OnUpdate();
             m_frameClock.SleepNextFrame();
         }
     }
@@ -53,9 +63,9 @@ namespace VexEngine
 	}
 
     // ToDo: Will revisit this
-	void Application::Render(float alpha)
+	void Application::Render(Graphics::IRenderer& renderer, float alpha)
 	{
-        //m_renderer->Clear();
+        renderer.Clear();
 		//m_sceneManager.Render(*m_renderer, alpha);
         //m_renderer->Display();
 	}
