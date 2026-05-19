@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Platforms/IWindow.hpp"
 #include "Scenes/SceneManager.hpp"
 #include "Chronos/FrameClock.hpp"
 #include "Assets/AssetManager.hpp"
@@ -21,13 +20,12 @@ namespace VexEngine
 	protected:
 		void FixedUpdate(float fixedDeltaTime);
 		void Update(float deltaTime);
-		void Render(float alpha);
+		void Render(Graphics::IRenderer& renderer, float alpha);
 
 	protected:
 		Scenes::SceneManager m_sceneManager;
 
 	private:
-		std::unique_ptr<Platforms::IWindow> m_window;
 		Assets::AssetPathProvider m_assetPathProvider;
 		Assets::AssetManager m_assetManager;
 		Chronos::FrameClock m_frameClock;

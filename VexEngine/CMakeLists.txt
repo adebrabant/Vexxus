@@ -11,6 +11,14 @@ add_library(${VEXENGINE_TARGET_NAME}
     src/Platforms/GLFW/GLFWWindow.hpp
     src/Platforms/GLFW/GLFWWindow.cpp
 
+    include/Graphics/IRenderer.hpp
+
+    src/Graphics/OpenGL/OpenGLContext.hpp
+    src/Graphics/OpenGL/OpenGLContext.cpp
+
+    src/Graphics/OpenGL/OpenGLRenderer.hpp
+    src/Graphics/OpenGL/OpenGLRenderer.cpp
+
     include/Assets/AssetManager.hpp
     src/Assets/AssetManager.cpp
 

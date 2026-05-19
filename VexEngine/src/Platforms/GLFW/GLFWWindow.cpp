@@ -5,28 +5,14 @@
 
 namespace VexEngine::Platforms
 {
-	GLFWWindow::GLFWWindow() :
+	GLFWWindow::GLFWWindow(const WindowProperties& properties) :
 		m_window(nullptr),
-		m_title(),
-		m_width(0),
-		m_height(0)
-	{
-
-	}
-
-	GLFWWindow::~GLFWWindow()
-	{
-		Shutdown();
-	}
-
-	void GLFWWindow::OnInit(const WindowProperties& properties)
+		m_title(properties.GetTitle()),
+		m_width(properties.GetWidth()),
+		m_height(properties.GetHeight())
 	{
 		if (m_window)
 			throw std::logic_error("GLFWWindow is already initialized.");
-
-		m_width = properties.GetWidth();
-		m_height = properties.GetHeight();
-		m_title = properties.GetTitle();
 
 		if (!glfwInit())
 			throw std::runtime_error("Failed to initialize GLFW.");
@@ -36,11 +22,12 @@ namespace VexEngine::Platforms
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		m_window = glfwCreateWindow(
-			m_width, 
-			m_height, 
-			m_title.c_str(), 
-			nullptr, 
-			nullptr);
+			static_cast<int>(m_width),
+			static_cast<int>(m_height),
+			m_title.c_str(),
+			nullptr,
+			nullptr
+		);
 
 		if (!m_window)
 		{
@@ -51,6 +38,11 @@ namespace VexEngine::Platforms
 		CenterWindow();
 
 		glfwMakeContextCurrent(m_window);
+	}
+
+	GLFWWindow::~GLFWWindow()
+	{
+		Shutdown();
 	}
 
 	void GLFWWindow::OnUpdate()
@@ -65,6 +57,22 @@ namespace VexEngine::Platforms
 	bool GLFWWindow::IsOpen() const
 	{
 		return m_window && !glfwWindowShouldClose(m_window);
+	}
+
+	uint32_t GLFWWindow::GetWidth() const
+	{
+		int width = 0;
+		int height = 0;
+		glfwGetWindowSize(m_window, &width, &height);
+		return static_cast<uint32_t>(width);
+	}
+
+	uint32_t GLFWWindow::GetHeight() const
+	{
+		int width = 0;
+		int height = 0;
+		glfwGetWindowSize(m_window, &width, &height);
+		return static_cast<uint32_t>(height);
 	}
 
 	void* GLFWWindow::GetNative() const
