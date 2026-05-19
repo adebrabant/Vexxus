@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Platforms/IWindow.hpp"
+#include "Platforms/WindowProperties.hpp"
 
 struct GLFWwindow;
 
@@ -9,17 +10,16 @@ namespace VexEngine::Platforms
 	class GLFWWindow : public IWindow
 	{
 	public:
-		GLFWWindow();
+		GLFWWindow(const WindowProperties& properties);
 		~GLFWWindow() override;
 
 		GLFWWindow(const GLFWWindow&) = delete;
 		GLFWWindow& operator = (const GLFWWindow&) = delete;
 
-		void OnInit(const WindowProperties& properties) override;
 		void OnUpdate() override;
 		bool IsOpen() const override;
-		uint32_t GetWidth() const override { return m_width; }
-		uint32_t GetHeight() const override { return m_height; }
+		uint32_t GetWidth() const override;
+		uint32_t GetHeight() const override;
 		void* GetNative() const override;
 
 	private:
