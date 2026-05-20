@@ -1,13 +1,13 @@
-#include "Core/Systems/CameraSystem.hpp"
-#include "Core/ECS/World.hpp"
-#include "Core/ECS/View.hpp"
-#include "Core/Components/TransformComponent.hpp"
-#include "Core/Components/CameraComponent.hpp"
+#include "Scenes/Systems/CameraSystem.hpp"
+#include "Scenes/ECS/World.hpp"
+#include "Scenes/ECS/View.hpp"
+#include "Scenes/Components/TransformComponent.hpp"
+#include "Scenes/Components/CameraComponent.hpp"
 #include "Graphics/IRenderer.hpp"
 
 #include <iostream> 
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	void CameraSystem::Update(World& world, float deltaTime)
 	{

@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	class Entity
 	{

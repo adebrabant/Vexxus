@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Core/Systems/ISystem.hpp"
+#include "Scenes/Systems/ISystem.hpp"
 #include <Graphics/IRenderer.hpp>
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	class World;
 

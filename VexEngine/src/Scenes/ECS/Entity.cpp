@@ -1,7 +1,7 @@
-#include "Core/ECS/Entity.hpp"
+#include "Scenes/ECS/Entity.hpp"
 #include <cstdint>
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	Entity::Entity(uint32_t id)
 		: m_id(id)

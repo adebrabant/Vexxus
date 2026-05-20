@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/ECS/World.hpp"
+#include "Scenes/ECS/World.hpp"
 #include "Graphics/IRenderer.hpp"
 
 namespace VexEngine::Scenes
@@ -16,6 +16,6 @@ namespace VexEngine::Scenes
 		virtual void Render(Graphics::IRenderer& renderer, float alpha);
 
 	protected:
-		Core::World m_world;
+		World m_world;
 	};
 }

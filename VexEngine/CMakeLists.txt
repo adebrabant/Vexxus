@@ -1,81 +1,88 @@
 find_package(glfw3 3.4 REQUIRED)
 find_package(GLEW REQUIRED)
 
-add_library(${VEXENGINE_TARGET_NAME}
-    include/Application.hpp
-    src/Application.cpp
+set(VEXENGINE_PUBLIC_HEADERS
+    include/Core/Application.hpp
 
     include/Platforms/IWindow.hpp
     include/Platforms/WindowProperties.hpp
 
+    include/Graphics/IRenderer.hpp
+
+    include/Assets/AssetManager.hpp
+    include/Assets/ImageLoader.hpp
+    include/Assets/IPathProvider.hpp
+    include/Assets/Asset.hpp
+    include/Assets/AssetPathProvider.hpp
+
+    include/Scenes/SceneManager.hpp
+    include/Scenes/Scene.hpp
+    include/Scenes/ECS/World.hpp
+    include/Scenes/ECS/Entity.hpp
+    include/Scenes/ECS/ComponentType.hpp
+    include/Scenes/ECS/ComponentStorage.hpp
+    include/Scenes/ECS/View.hpp
+    include/Scenes/Systems/ISystem.hpp
+    include/Scenes/Components/TransformComponent.hpp
+    include/Scenes/Components/CameraComponent.hpp
+    include/Scenes/Components/VelocityComponent.hpp
+    include/Scenes/Components/CollisionComponent.hpp
+    include/Scenes/Components/RenderableComponent.hpp
+    include/Scenes/Systems/CameraSystem.hpp
+    include/Scenes/Systems/MovementSystem.hpp
+    include/Scenes/Systems/CollisionSystem.hpp
+    include/Scenes/Systems/RenderSystem.hpp
+
+    include/Chronos/FrameClock.hpp
+
+    include/Inputs/InputHandler.hpp
+)
+
+set(VEXENGINE_PRIVATE_SOURCES
+    src/Core/Application.cpp
+
     src/Platforms/GLFW/GLFWWindow.hpp
     src/Platforms/GLFW/GLFWWindow.cpp
 
-    include/Graphics/IRenderer.hpp
-
     src/Graphics/OpenGL/OpenGLContext.hpp
     src/Graphics/OpenGL/OpenGLContext.cpp
-
     src/Graphics/OpenGL/OpenGLRenderer.hpp
     src/Graphics/OpenGL/OpenGLRenderer.cpp
 
-    include/Assets/AssetManager.hpp
     src/Assets/AssetManager.cpp
-
-    include/Assets/ImageLoader.hpp
     src/Assets/ImageLoader.cpp
-
-    include/Assets/IPathProvider.hpp
-
-    include/Assets/Asset.hpp
     src/Assets/Asset.cpp
-
-    include/Assets/AssetPathProvider.hpp
     src/Assets/AssetPathProvider.cpp
 
-    include/Scenes/SceneManager.hpp
     src/Scenes/SceneManager.cpp
-
-    include/Scenes/Scene.hpp
     src/Scenes/Scene.cpp
+    src/Scenes/ECS/World.cpp
+    src/Scenes/ECS/Entity.cpp
+    src/Scenes/Systems/CameraSystem.cpp
+    src/Scenes/Systems/MovementSystem.cpp
+    src/Scenes/Systems/CollisionSystem.cpp
+    src/Scenes/Systems/RenderSystem.cpp
 
-    include/Chronos/FrameClock.hpp
     src/Chronos/FrameClock.cpp
 
-    include/Core/ECS/World.hpp
-    src/Core/ECS/World.cpp
-
-    include/Core/ECS/Entity.hpp
-    src/Core/ECS/Entity.cpp
-
-    include/Core/ECS/ComponentType.hpp
-
-    include/Core/ECS/ComponentStorage.hpp
-
-    include/Core/ECS/View.hpp
-
-    include/Core/Systems/ISystem.hpp
-
-    include/Core/Components/TransformComponent.hpp
-    include/Core/Components/CameraComponent.hpp
-    include/Core/Components/VelocityComponent.hpp
-    include/Core/Components/CollisionComponent.hpp
-    include/Core/Components/RenderableComponent.hpp
-
-    include/Core/Systems/CameraSystem.hpp
-    src/Core/Systems/CameraSystem.cpp
-
-    include/Core/Systems/MovementSystem.hpp
-    src/Core/Systems/MovementSystem.cpp
-
-   include/Core/Systems/CollisionSystem.hpp
-    src/Core/Systems/CollisionSystem.cpp
-
-    include/Core/Systems/RenderSystem.hpp
-    src/Core/Systems/RenderSystem.cpp
-
-    include/Inputs/InputHandler.hpp
     src/Inputs/InputHandler.cpp
+)
+
+add_library(${VEXENGINE_TARGET_NAME}
+    ${VEXENGINE_PUBLIC_HEADERS}
+    ${VEXENGINE_PRIVATE_SOURCES}
+)
+
+source_group(
+    TREE ${CMAKE_CURRENT_SOURCE_DIR}/include
+    PREFIX "Header Files"
+    FILES ${VEXENGINE_PUBLIC_HEADERS}
+)
+
+source_group(
+    TREE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    PREFIX "Source Files"
+    FILES ${VEXENGINE_PRIVATE_SOURCES}
 )
 
 target_include_directories(${VEXENGINE_TARGET_NAME}

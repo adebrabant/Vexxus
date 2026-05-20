@@ -1,8 +1,8 @@
 #include "Systems/InputSystem.hpp"
-#include "Core/ECS/World.hpp"
-#include "Core/ECS/View.hpp"
+#include "Scenes/ECS/World.hpp"
+#include "Scenes/ECS/View.hpp"
 #include "Graphics/IRenderer.hpp"
-#include "Core/Components/VelocityComponent.hpp"	
+#include "Scenes/Components/VelocityComponent.hpp"	
 
 namespace Vexxus::Systems
 {
@@ -12,9 +12,9 @@ namespace Vexxus::Systems
 
 	}
 
-	void InputSystem::Update(VexEngine::Core::World& world, float deltaTime)
+	void InputSystem::Update(VexEngine::Scenes::World& world, float deltaTime)
 	{
-		VexEngine::Core::View<VexEngine::Core::VelocityComponent> view(world);
+		VexEngine::Scenes::View<VexEngine::Scenes::VelocityComponent> view(world);
 		for (auto [velocity] : view)
 		{
 			if (m_inputHandler.IsUpPressed())
@@ -41,7 +41,7 @@ namespace Vexxus::Systems
 		}
 	}
 
-	void InputSystem::Render(VexEngine::Core::World& world, VexEngine::Graphics::IRenderer& renderer, float alpha)
+	void InputSystem::Render(VexEngine::Scenes::World& world, VexEngine::Graphics::IRenderer& renderer, float alpha)
 	{
 
 	}

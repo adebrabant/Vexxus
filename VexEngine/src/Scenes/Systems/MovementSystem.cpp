@@ -1,8 +1,8 @@
-#include "Core/Systems/MovementSystem.hpp"
-#include "Core/Systems/ISystem.hpp"
+#include "Scenes/Systems/MovementSystem.hpp"
+#include "Scenes/Systems/ISystem.hpp"
 #include "Graphics/IRenderer.hpp"
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	void MovementSystem::Update(World& world, float deltaTime)
 	{

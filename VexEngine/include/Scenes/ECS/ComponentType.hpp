@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
     inline uint32_t GetNextComponentTypeId() {
         static uint32_t nextId = 0;

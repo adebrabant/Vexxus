@@ -9,7 +9,7 @@
 #include <string>
 #include <memory>
 
-namespace VexEngine
+namespace VexEngine::Core
 {
 	class Application
 	{

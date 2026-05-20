@@ -1,4 +1,4 @@
-#include "Application.hpp"
+#include "Core/Application.hpp"
 #include "Assets/AssetManager.hpp"
 #include "Platforms/WindowProperties.hpp"
 #include "Platforms/GLFW/GLFWWindow.hpp"
@@ -10,7 +10,7 @@
 #include <string>
 #include <iostream>
 
-namespace VexEngine
+namespace VexEngine::Core
 {
 	Application::Application(uint32_t windowWidth, uint32_t windowHeight, const std::string& title) :
         m_assetPathProvider(),
