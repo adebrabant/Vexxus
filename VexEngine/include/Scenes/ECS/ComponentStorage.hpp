@@ -5,7 +5,7 @@
 #include <utility>
 #include <unordered_map>
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	class IComponentStorage
 	{

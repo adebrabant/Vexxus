@@ -1,8 +1,8 @@
-#include "Core/Systems/CollisionSystem.hpp"
-#include "Core/Systems/ISystem.hpp"
+#include "Scenes/Systems/CollisionSystem.hpp"
+#include "Scenes/Systems/ISystem.hpp"
 #include "Graphics/IRenderer.hpp"
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	void CollisionSystem::Update(World& world, float deltaTime)
 	{

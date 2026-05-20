@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Core/ECS/World.hpp"
-#include "Core/ECS/ComponentStorage.hpp"
+#include "Scenes/ECS/World.hpp"
+#include "Scenes/ECS/ComponentStorage.hpp"
 #include <cstdint>
 #include <tuple>
 #include "Entity.hpp"
 #include <utility>
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	template<typename... TComponents>
 	class View

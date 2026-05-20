@@ -2,7 +2,7 @@
 
 #include "Graphics/IRenderer.hpp"
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	class World;
 

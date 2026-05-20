@@ -1,5 +1,5 @@
 #include "GameApplication.hpp"
-#include "Application.hpp"
+#include "Core/Application.hpp"
 #include "Scenes/TestScene.hpp"
 
 namespace Vexxus

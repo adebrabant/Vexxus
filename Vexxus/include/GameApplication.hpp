@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Application.hpp"
+#include "Core/Application.hpp"
 
 namespace Vexxus
 {
-	class GameApplication : public VexEngine::Application
+	class GameApplication : public VexEngine::Core::Application
 	{
 	public:
 		GameApplication();

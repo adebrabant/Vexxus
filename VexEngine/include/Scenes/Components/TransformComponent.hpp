@@ -1,6 +1,6 @@
 #pragma once
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	struct TransformComponent
 	{

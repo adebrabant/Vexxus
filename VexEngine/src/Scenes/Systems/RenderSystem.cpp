@@ -1,8 +1,8 @@
-#include "Core/Systems/RenderSystem.hpp"
-#include "Core/Systems/ISystem.hpp"
+#include "Scenes/Systems/RenderSystem.hpp"
+#include "Scenes/Systems/ISystem.hpp"
 #include "Graphics/IRenderer.hpp"
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	void RenderSystem::Update(World& world, float deltaTime)
 	{

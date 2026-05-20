@@ -1,17 +1,17 @@
 #pragma once
 
 #include "Graphics/IRenderer.hpp"
-#include "Core/ECS/Entity.hpp"
-#include "Core/ECS/ComponentStorage.hpp"
-#include "Core/ECS/ComponentType.hpp"
-#include "Core/Systems/ISystem.hpp"
+#include "Scenes/ECS/Entity.hpp"
+#include "Scenes/ECS/ComponentStorage.hpp"
+#include "Scenes/ECS/ComponentType.hpp"
+#include "Scenes/Systems/ISystem.hpp"
 #include <cstdint>
 #include <vector>
 #include <set>
 #include <unordered_map>
 #include <memory>
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	class World
 	{

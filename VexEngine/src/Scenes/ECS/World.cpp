@@ -1,11 +1,11 @@
-#include "Core/ECS/World.hpp"
-#include "Core/ECS/Entity.hpp"
+#include "Scenes/ECS/World.hpp"
+#include "Scenes/ECS/Entity.hpp"
 #include "Graphics/IRenderer.hpp"
-#include "Core/Systems/ISystem.hpp"
+#include "Scenes/Systems/ISystem.hpp"
 
 #include <cstdint>
 
-namespace VexEngine::Core
+namespace VexEngine::Scenes
 {
 	World::World() :
 		m_nextEntityId(0),
