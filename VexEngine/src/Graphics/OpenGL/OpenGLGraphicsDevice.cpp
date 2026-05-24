@@ -1,10 +1,29 @@
 #include "Graphics/OpenGL/OpenGLGraphicsDevice.hpp"
+#include "Graphics/OpenGL/OpenGLShader.hpp"
+#include "Graphics/OpenGL/OpenGLVertexBuffer.hpp"
+#include "Graphics/OpenGL/OpenGLVertexArray.hpp"
+#include "Graphics/OpenGL/OpenGLIndexBuffer.hpp"
 
 #include <GL/glew.h>
 #include <iostream>
 
 namespace VexEngine::Graphics
 {
+	OpenGLGraphicsDevice::~OpenGLGraphicsDevice()
+	{
+		delete m_vao;
+		m_vao = nullptr;
+
+		delete m_ibo;
+		m_ibo = nullptr;
+
+		delete m_vbo;
+		m_vbo = nullptr;
+
+		delete m_shader;
+		m_shader = nullptr;
+	}
+
 	void OpenGLGraphicsDevice::BeginFrame()
 	{
 		// ToDo: Reserved for per-frame graphics device setup
@@ -40,29 +59,35 @@ namespace VexEngine::Graphics
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	void OpenGLGraphicsDevice::RenderTempTriangle()
+	void OpenGLGraphicsDevice::RenderTemp()
 	{
 		if (!m_isTempTriangleInit)
 		{
-			InitTempTriangle();
+			InitTemp();
 			m_isTempTriangleInit = true;
 		}
 
-		glUseProgram(static_cast<GLuint>(m_tempTriangleShaderProgram));
-		glBindVertexArray(static_cast<GLuint>(m_tempTriangleVertexArray));
+		m_shader->Bind();
+		m_vao->Bind();
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(
+			GL_TRIANGLES,
+			m_ibo->GetCount(),
+			GL_UNSIGNED_INT,
+			nullptr
+		);
 
-		glBindVertexArray(0);
-		glUseProgram(0);
+		m_vao->Unbind();
+		m_shader->Unbind();
 	}
 
-	void OpenGLGraphicsDevice::InitTempTriangle()
+	void OpenGLGraphicsDevice::InitTemp()
 	{
 		const char* vertexShaderSource = R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
 			
 			void main()
 			{
@@ -81,90 +106,27 @@ namespace VexEngine::Graphics
 			}
 		)";
 
-		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
-		glCompileShader(vertexShader);
-
-		GLint vertexCompileSuccess;
-		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vertexCompileSuccess);
-
-		if (!vertexCompileSuccess)
-		{
-			char infoLog[512];
-			glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
-			std::cerr << "Vertex shader comp failed: " << infoLog << std::endl;
-		}
-
-		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
-		glCompileShader(fragmentShader);
-
-		GLint fragmentCompileSuccess = false;
-		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fragmentCompileSuccess);
-
-		if (!fragmentCompileSuccess)
-		{
-			char infoLog[512];
-			glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
-			std::cerr << "Fragment shader comp failed: " << infoLog << std::endl;
-		}
-
-		GLuint shaderProgram = glCreateProgram();
-		glAttachShader(shaderProgram, vertexShader);
-		glAttachShader(shaderProgram, fragmentShader);
-		glLinkProgram(shaderProgram);
-
-		GLint linkSuccess = 0;
-		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &linkSuccess);
-
-		if (!linkSuccess)
-		{
-			char infoLog[512];
-			glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-			std::cerr << "Shader program link failed: " << infoLog << std::endl;
-		}
-
-		glDeleteShader(vertexShader);
-		glDeleteShader(fragmentShader);
+		m_shader = new OpenGLShader(vertexShaderSource, fragmentShaderSource);
 
 		float vertices[] =
 		{
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f
+			// position      // tex coord
+			-0.5f, -0.5f,    0.0f, 0.0f,
+			 0.5f, -0.5f,    1.0f, 0.0f,
+			 0.5f,  0.5f,    1.0f, 1.0f,
+			-0.5f,  0.5f,    0.0f, 1.0f
 		};
 
-		GLuint vertexArray = 0;
-		GLuint vertexBuffer = 0;
+		uint32_t indices[] =
+		{
+			0, 1, 2,
+			2, 3, 0
+		};
 
-		glGenVertexArrays(1, &vertexArray);
-		glGenBuffers(1, &vertexBuffer);
-
-		glBindVertexArray(vertexArray);
-
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(
-			GL_ARRAY_BUFFER,
-			sizeof(vertices),
-			vertices,
-			GL_STATIC_DRAW
-		);
-
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(
-			0, 
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			3 * sizeof(float),
-			nullptr
-		);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
-
-		m_tempTriangleShaderProgram = shaderProgram;
-		m_tempTriangleVertexArray = vertexArray;
-		m_tempTriangleVertexBuffer = vertexBuffer;
+		m_vao = new OpenGLVertexArray();
+		m_vbo = new OpenGLVertexBuffer(vertices, sizeof(vertices));
+		m_ibo = new OpenGLIndexBuffer(indices, static_cast<uint32_t>(std::size(indices)));
+		m_vao->AddVertexBuffer(*m_vbo);
+		m_vao->SetIndexBuffer(*m_ibo);
 	}
 }

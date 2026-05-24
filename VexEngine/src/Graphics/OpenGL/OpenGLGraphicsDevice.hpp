@@ -1,15 +1,21 @@
 #pragma once
 
 #include "Graphics/IGraphicsDevice.hpp"
+
 #include <cstdint>
 
 namespace VexEngine::Graphics
 {
+	class OpenGLShader;
+	class OpenGLVertexBuffer;
+	class OpenGLVertexArray;
+	class OpenGLIndexBuffer;
+
 	class OpenGLGraphicsDevice : public IGraphicsDevice
 	{
 	public:
 		OpenGLGraphicsDevice() = default;
-		~OpenGLGraphicsDevice() = default;
+		~OpenGLGraphicsDevice();
 		void BeginFrame() override;
 		void EndFrame() override;
 		void SetViewport(uint32_t width, uint32_t height) override;
@@ -18,15 +24,16 @@ namespace VexEngine::Graphics
 
 		// Temporary rendering checkpoint
 		// Remove once Shader / VertexBuffer / VertexArray abstractions exist
-		void RenderTempTriangle();
+		void RenderTemp();
 
 	private:
-		void InitTempTriangle();
+		void InitTemp();
 
 	private:
+		OpenGLShader* m_shader;
+		OpenGLVertexBuffer* m_vbo;
+		OpenGLVertexArray* m_vao;
+		OpenGLIndexBuffer* m_ibo;
 		bool m_isTempTriangleInit = false;
-		uint32_t m_tempTriangleShaderProgram = 0;
-		uint32_t m_tempTriangleVertexArray = 0;
-		uint32_t m_tempTriangleVertexBuffer = 0;
 	};
 }

@@ -50,6 +50,14 @@ set(VEXENGINE_PRIVATE_SOURCES
     src/Graphics/OpenGL/OpenGLContext.cpp
     src/Graphics/OpenGL/OpenGLGraphicsDevice.hpp
     src/Graphics/OpenGL/OpenGLGraphicsDevice.cpp
+    src/Graphics/OpenGL/OpenGLShader.hpp
+    src/Graphics/OpenGL/OpenGLShader.cpp
+    src/Graphics/OpenGL/OpenGLVertexBuffer.hpp
+    src/Graphics/OpenGL/OpenGLVertexBuffer.cpp
+    src/Graphics/OpenGL/OpenGLVertexArray.hpp
+    src/Graphics/OpenGL/OpenGLVertexArray.cpp
+    src/Graphics/OpenGL/OpenGLIndexBuffer.hpp
+    src/Graphics/OpenGL/OpenGLIndexBuffer.cpp
 
     src/Assets/AssetManager.cpp
     src/Assets/ImageLoader.cpp
