@@ -152,7 +152,7 @@ namespace Cocoa::Graphics
 			.MagFilter = TextureFilter::Nearest,
 			.WrapS = TextureWrap::ClampToEdge,
 			.WrapT = TextureWrap::ClampToEdge,
-			.GenerateMipmaps = false
+			.GenerateMipmaps = true
 		};
 
 		unsigned char pixels[] =

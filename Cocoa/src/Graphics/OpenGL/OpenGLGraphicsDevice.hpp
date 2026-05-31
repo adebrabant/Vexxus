@@ -31,11 +31,11 @@ namespace Cocoa::Graphics
 		void InitTemp();
 
 	private:
-		OpenGLShader* m_shader;
-		OpenGLVertexBuffer* m_vbo;
-		OpenGLVertexArray* m_vao;
-		OpenGLIndexBuffer* m_ibo;
-		OpenGLTexture2D* m_texture;
+		OpenGLShader* m_shader{ nullptr };
+		OpenGLVertexBuffer* m_vbo{ nullptr };
+		OpenGLVertexArray* m_vao{ nullptr };
+		OpenGLIndexBuffer* m_ibo{ nullptr };
+		OpenGLTexture2D* m_texture{ nullptr };
 		bool m_isTempTriangleInit = false;
 	};
 }
