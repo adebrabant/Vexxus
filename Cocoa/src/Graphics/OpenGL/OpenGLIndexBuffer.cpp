@@ -24,11 +24,27 @@ namespace Cocoa::Graphics
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
-		if (m_ibo == 0)
-			return;
+		Destroy();
+	}
 
-		GLuint indexBuffer = static_cast<GLuint>(m_ibo);
-		glDeleteBuffers(1, &indexBuffer);
+	OpenGLIndexBuffer::OpenGLIndexBuffer(OpenGLIndexBuffer&& other) noexcept : 
+		m_ibo(other.m_ibo),
+		m_count(other.m_count)
+	{
+		other.m_ibo = 0;
+	}
+
+	OpenGLIndexBuffer& OpenGLIndexBuffer::operator=(OpenGLIndexBuffer&& other) noexcept
+	{
+		if (this == &other)
+			return *this;
+
+		Destroy();
+		m_ibo = other.m_ibo;
+		m_count = other.m_count;
+		other.m_ibo = 0;
+
+		return *this;
 	}
 
 	void OpenGLIndexBuffer::Bind() const
@@ -44,5 +60,14 @@ namespace Cocoa::Graphics
 	uint32_t OpenGLIndexBuffer::GetCount() const
 	{
 		return m_count;
+	}
+
+	void OpenGLIndexBuffer::Destroy()
+	{
+		if (m_ibo <= 0)
+			return;
+
+		GLuint indexBuffer = static_cast<GLuint>(m_ibo);
+		glDeleteBuffers(1, &indexBuffer);
 	}
 }
