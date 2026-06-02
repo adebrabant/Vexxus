@@ -116,10 +116,10 @@ namespace Cocoa::Graphics
 		Destroy();
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(OpenGLTexture2D&& other) noexcept
+	OpenGLTexture2D::OpenGLTexture2D(OpenGLTexture2D&& other) noexcept :
+		m_textureId(other.m_textureId),
+		m_textureSpec(std::move(other.m_textureSpec))
 	{
-		m_textureId = other.m_textureId;
-		m_textureSpec = other.m_textureSpec;
 		other.m_textureId = 0;
 	}
 
@@ -128,13 +128,9 @@ namespace Cocoa::Graphics
 		if (this == &other)
 			return *this;
 
-		if (m_textureId != 0)
-		{
-			Destroy();
-		}
-
+		Destroy();
 		m_textureId = other.m_textureId;
-		m_textureSpec = other.m_textureSpec;
+		m_textureSpec = std::move(other.m_textureSpec);
 		other.m_textureId = 0;
 
 		return *this;
@@ -159,7 +155,7 @@ namespace Cocoa::Graphics
 
 	void OpenGLTexture2D::Destroy()
 	{
-		if (m_textureId == 0)
+		if (m_textureId <= 0)
 			return;
 
 		glDeleteTextures(1, &m_textureId);

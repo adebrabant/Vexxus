@@ -60,10 +60,25 @@ namespace Cocoa::Graphics
 
 	OpenGLShader::~OpenGLShader()
 	{
-		if (m_rendererId != 0)
-		{
-			glDeleteProgram(static_cast<GLuint>(m_rendererId));
-		}
+		Destroy();
+	}
+
+	OpenGLShader::OpenGLShader(OpenGLShader&& other) noexcept :
+		m_rendererId(other.m_rendererId)
+	{
+		other.m_rendererId = 0;
+	}
+
+	OpenGLShader& OpenGLShader::operator==(OpenGLShader&& other) noexcept
+	{
+		if (this == &other)
+			return *this;
+
+		Destroy();
+		m_rendererId = other.m_rendererId;
+		other.m_rendererId = 0;
+
+		return *this;
 	}
 
 	void OpenGLShader::Bind() const
@@ -94,5 +109,13 @@ namespace Cocoa::Graphics
 		);
 
 		glUniform1f(location, value);
+	}
+
+	void OpenGLShader::Destroy()
+	{
+		if (m_rendererId <= 0)
+			return;
+
+		glDeleteProgram(static_cast<GLuint>(m_rendererId));
 	}
 }

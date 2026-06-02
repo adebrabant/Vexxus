@@ -5,6 +5,8 @@
 #include "Graphics/OpenGL/OpenGLIndexBuffer.hpp"
 #include "Graphics/OpenGL/OpenGLTexture2D.hpp"
 #include "Graphics/TextureSpec.hpp"
+#include "Graphics/BufferElement.hpp"
+#include "Graphics/BufferLayout.hpp"
 
 #include <GL/glew.h>
 #include <iostream>
@@ -137,8 +139,14 @@ namespace Cocoa::Graphics
 			2, 3, 0
 		};
 
+		BufferLayout layout =
+		{
+			{ 0, ShaderDataType::Float2, "a_Position" },
+			{ 1, ShaderDataType::Float2, "a_TexCoord" },
+		};
+
 		m_vao = new OpenGLVertexArray();
-		m_vbo = new OpenGLVertexBuffer(vertices, sizeof(vertices));
+		m_vbo = new OpenGLVertexBuffer(vertices, sizeof(vertices), layout);
 		m_ibo = new OpenGLIndexBuffer(indices, static_cast<uint32_t>(std::size(indices)));
 		m_vao->AddVertexBuffer(*m_vbo);
 		m_vao->SetIndexBuffer(*m_ibo);

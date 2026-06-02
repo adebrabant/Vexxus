@@ -15,11 +15,17 @@ namespace Cocoa::Graphics
 		OpenGLVertexArray(const OpenGLVertexArray&) = delete;
 		OpenGLVertexArray& operator=(const OpenGLVertexArray&) = delete;
 
+		OpenGLVertexArray(OpenGLVertexArray&& other) noexcept;
+		OpenGLVertexArray& operator=(OpenGLVertexArray&& other) noexcept;
+
 		void Bind() const;
 		void Unbind() const;
 
 		void AddVertexBuffer(const OpenGLVertexBuffer& vertexBuffer);
 		void SetIndexBuffer(const OpenGLIndexBuffer& indexBuffer);
+
+	private:
+		void Destroy();
 
 	private:
 		uint32_t m_vao;

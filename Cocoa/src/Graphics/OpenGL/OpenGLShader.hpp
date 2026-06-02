@@ -14,6 +14,9 @@ namespace Cocoa::Graphics
 		OpenGLShader(const OpenGLShader&) = delete;
 		OpenGLShader& operator=(const OpenGLShader&) = delete;
 
+		OpenGLShader(OpenGLShader&& other) noexcept;
+		OpenGLShader& operator==(OpenGLShader&& other) noexcept;
+
 		void Bind() const;
 		void Unbind() const;
 
@@ -22,6 +25,9 @@ namespace Cocoa::Graphics
 
 		// ToDo: Add once engine math types exist.
 		// void SetMat4(const std::string& name, const Matrix4& value);
+
+	private:
+		void Destroy();
 
 	private:
 		uint32_t m_rendererId;

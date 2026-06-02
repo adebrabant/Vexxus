@@ -3,9 +3,42 @@
 #include "Graphics/OpenGL/OpenGLIndexBuffer.hpp"
 
 #include <GL/glew.h>
+#include <cstdint>
+#include <stdexcept>
 
 namespace Cocoa::Graphics
 {
+	static GLenum ToOpenGLScalarType(ShaderDataType shaderType)
+	{
+		switch (shaderType)
+		{
+		case Cocoa::Graphics::ShaderDataType::Float:
+			return GL_FLOAT;
+		case Cocoa::Graphics::ShaderDataType::Float2:
+			return GL_FLOAT;
+		case Cocoa::Graphics::ShaderDataType::Float3:
+			return GL_FLOAT;
+		case Cocoa::Graphics::ShaderDataType::Float4:
+			return GL_FLOAT;
+		case Cocoa::Graphics::ShaderDataType::Mat3:
+			return GL_FLOAT;
+		case Cocoa::Graphics::ShaderDataType::Mat4:
+			return GL_FLOAT;
+		case Cocoa::Graphics::ShaderDataType::Int:
+			return GL_INT;
+		case Cocoa::Graphics::ShaderDataType::Int2:
+			return GL_INT;
+		case Cocoa::Graphics::ShaderDataType::Int3:
+			return GL_INT;
+		case Cocoa::Graphics::ShaderDataType::Int4:
+			return GL_INT;
+		case Cocoa::Graphics::ShaderDataType::Bool:
+			return GL_BOOL;
+		default:
+			throw std::runtime_error("Invalid Shader Type.");
+		}
+	}
+
 	OpenGLVertexArray::OpenGLVertexArray() 
 		: m_vao(0)
 	{
@@ -16,11 +49,25 @@ namespace Cocoa::Graphics
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
-		if (m_vao == 0)
-			return;
+		Destroy();
+	}
 
-		GLuint vertexArray = static_cast<GLuint>(m_vao);
-		glDeleteVertexArrays(1, &vertexArray);
+	OpenGLVertexArray::OpenGLVertexArray(OpenGLVertexArray&& other) noexcept :
+		m_vao(other.m_vao)
+	{
+		other.m_vao = 0;
+	}
+
+	OpenGLVertexArray& OpenGLVertexArray::operator=(OpenGLVertexArray&& other) noexcept
+	{
+		if (this == &other)
+			return *this;
+
+		Destroy();
+		m_vao = other.m_vao;
+		other.m_vao = 0;
+
+		return *this;
 	}
 
 	void OpenGLVertexArray::Bind() const
@@ -33,31 +80,23 @@ namespace Cocoa::Graphics
 		glBindVertexArray(0);
 	}
 
-	// ToDo: Remove hardcoded values
 	void OpenGLVertexArray::AddVertexBuffer(const OpenGLVertexBuffer& vertexBuffer)
 	{
 		Bind();
 		vertexBuffer.Bind();
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(
-			0,
-			2,
-			GL_FLOAT,
-			GL_FALSE,
-			4 * sizeof(float),
-			nullptr
-		);
-
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(
-			1,
-			2,
-			GL_FLOAT,
-			GL_FALSE,
-			4 * sizeof(float),
-			reinterpret_cast<const void*>(2 * sizeof(float))
-		);
+		for (const auto& element : vertexBuffer.GetLayout().GetElements())
+		{
+			glEnableVertexAttribArray(element.Location);
+			glVertexAttribPointer(
+				element.Location,
+				static_cast<GLint>(element.GetScalarCount()),
+				ToOpenGLScalarType(element.Type),
+				element.Normalized != true ? GL_FALSE : GL_TRUE,
+				vertexBuffer.GetLayout().GetStride(),
+				reinterpret_cast<const void*>(static_cast<uintptr_t>(element.Offset))
+			);
+		}
 
 		vertexBuffer.Unbind();
 		Unbind();
@@ -68,5 +107,14 @@ namespace Cocoa::Graphics
 		Bind();
 		indexBuffer.Bind();
 		Unbind();
+	}
+
+	void OpenGLVertexArray::Destroy()
+	{
+		if (m_vao <= 0)
+			return;
+
+		GLuint vertexArray = static_cast<GLuint>(m_vao);
+		glDeleteVertexArrays(1, &vertexArray);
 	}
 }
