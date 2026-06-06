@@ -1,5 +1,5 @@
 #include "Assets/AssetManager.hpp"
-#include "Assets/IPathProvider.hpp"
+#include "Assets/PathProvider.hpp"
 #include "Assets/ImageLoader.hpp"
 #include "Assets/Asset.hpp"
 
@@ -11,7 +11,7 @@
 
 namespace Cocoa::Assets
 {
-	AssetManager::AssetManager(IPathProvider& pathProvider) :
+	AssetManager::AssetManager(PathProvider& pathProvider) :
 		m_pathProvider(pathProvider),
 		m_imageLoader(),
 		m_texturePathCache(),
