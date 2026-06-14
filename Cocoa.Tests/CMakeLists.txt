@@ -10,6 +10,10 @@ set(COCOA_TEST_SOURCES
 set(COCOA_TEST_DATA
     src/TestData/Metadata/textures.json
     src/TestData/Metadata/badtextures.json
+    src/TestData/Metadata/shaders.json
+    src/TestData/Metadata/badshaders.json
+    src/TestData/Metadata/materials.json
+    src/TestData/Metadata/badmaterials.json
 )
 
 add_executable(${COCOA_TESTS_TARGET_NAME}

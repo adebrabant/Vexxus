@@ -78,6 +78,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Assets/ImageLoader.cpp
     src/Assets/Asset.cpp
     src/Assets/AssetPathProvider.cpp
+    src/Assets/JsonAssetDatabase.cpp
 
     src/Scenes/SceneManager.cpp
     src/Scenes/Scene.cpp
