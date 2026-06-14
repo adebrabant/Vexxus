@@ -22,8 +22,6 @@ set(COCOA_PUBLIC_HEADERS
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp
-    include/Assets/PathProvider.hpp
-    include/Assets/Asset.hpp
     include/Assets/AssetPathProvider.hpp
     include/Assets/Image.hpp
     include/Assets/AssetDatabase.hpp
