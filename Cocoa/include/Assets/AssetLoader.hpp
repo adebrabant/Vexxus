@@ -10,7 +10,7 @@ namespace Cocoa::Assets
 	class AssetLoader
 	{
 	public:
-		AssetLoader() = default;
+		AssetLoader();
 		~AssetLoader() = default;
 		Image Load(const std::filesystem::path& path) const;
 	};

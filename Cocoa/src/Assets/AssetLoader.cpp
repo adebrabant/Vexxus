@@ -9,12 +9,18 @@
 
 namespace Cocoa::Assets
 {
+	AssetLoader::AssetLoader()
+	{
+		stbi_set_flip_vertically_on_load(true);
+	}
+
 	Image AssetLoader::Load(const std::filesystem::path& path) const
 	{
 		Image image;
 		int width = 0;
 		int height = 0;
 		int channels = 0;
+
 		unsigned char* data = stbi_load(
 			path.string().c_str(),
 			&width,
