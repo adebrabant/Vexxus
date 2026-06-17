@@ -2,6 +2,7 @@
 #include "Assets/Image.hpp"
 
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <filesystem>
 #include <string.h>
@@ -15,7 +16,6 @@ namespace Cocoa::Assets
 		stbi_set_flip_vertically_on_load(true);
 	}
 
-	//ToDo: Add unit tests
 	Image AssetLoader::Load(const std::filesystem::path& path) const
 	{
 		Image image;
@@ -50,7 +50,6 @@ namespace Cocoa::Assets
 		return image;
 	}
 
-	//ToDo: Add unit tests
 	std::string AssetLoader::LoadTextFile(const std::filesystem::path& path) const
 	{
 		std::ifstream file(path, std::ios::in | std::ios::binary);
