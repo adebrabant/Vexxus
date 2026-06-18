@@ -1,11 +1,24 @@
 find_package(GTest CONFIG REQUIRED)
 
+set(COCOA_TEST_HEADERS
+    include/Stubs/Graphics/StubGraphicsDevice.hpp
+    include/Stubs/Graphics/StubShader.hpp
+    include/Stubs/Graphics/StubTexture2D.hpp
+)
+
 set(COCOA_TEST_SOURCES
     src/Chronos/FrameClockTests.cpp
     src/Scenes/SceneManagerTests.cpp
     src/Platforms/WindowPropertiesTests.cpp
     src/Assets/JsonDatabaseTests.cpp
+    src/Assets/AssetLoaderTests.cpp
     src/Graphics/TextureSpecTests.cpp
+    src/Graphics/ShaderManagerTests.cpp
+    src/Graphics/TextureManagerTests.cpp
+
+    src/Stubs/Graphics/StubGraphicsDevice.cpp
+    src/Stubs/Graphics/StubShader.cpp
+    src/Stubs/Graphics/StubTexture2D.cpp
 )
 
 set(COCOA_TEST_DATA
@@ -18,8 +31,15 @@ set(COCOA_TEST_DATA
 )
 
 add_executable(${COCOA_TESTS_TARGET_NAME}
+    ${COCOA_TEST_HEADERS}
     ${COCOA_TEST_SOURCES}
     ${COCOA_TEST_DATA}
+)
+
+source_group(
+    TREE ${CMAKE_CURRENT_SOURCE_DIR}/include
+    PREFIX "Header Files"
+    FILES ${COCOA_TEST_HEADERS}
 )
 
 source_group(

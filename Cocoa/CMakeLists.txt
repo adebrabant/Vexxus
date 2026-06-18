@@ -20,11 +20,13 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/VertexArray.hpp
     include/Graphics/VertexBuffer.hpp
     include/Graphics/TextureManager.hpp
+    include/Graphics/ShaderManager.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp
     include/Assets/AssetPathProvider.hpp
     include/Assets/Image.hpp
+    include/Assets/ShaderSource.hpp
     include/Assets/AssetDatabase.hpp
     include/Assets/JsonAssetDatabase.hpp
 
@@ -75,6 +77,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Graphics/OpenGL/OpenGLTexture2D.hpp
     src/Graphics/OpenGL/OpenGLTexture2D.cpp
     src/Graphics/TextureManager.cpp
+    src/Graphics/ShaderManager.cpp
 
     src/Assets/AssetManager.cpp
     src/Assets/AssetLoader.cpp
