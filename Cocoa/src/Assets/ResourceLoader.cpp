@@ -29,7 +29,7 @@ namespace Cocoa::Assets
 
 	}
 
-	Graphics::TextureHandle ResourceLoader::LoadTexture(const std::string& textureId)
+	Graphics::TextureHandle ResourceLoader::LoadTexture(const std::string& textureId) const
 	{
 		const TextureRecord& record = m_assetDatabase.GetTextureInfo(textureId);
 		const Image& image = m_assetManager.LoadImage(record.Path);
@@ -49,7 +49,7 @@ namespace Cocoa::Assets
 		return m_textureManager.Load(spec, image.Pixels.data());
 	}
 
-	Graphics::ShaderHandle ResourceLoader::LoadShader(const std::string& shaderId)
+	Graphics::ShaderHandle ResourceLoader::LoadShader(const std::string& shaderId) const
 	{
 		const ShaderRecord& record = m_assetDatabase.GetShaderInfo(shaderId);
 		const ShaderSource& source = m_assetManager.LoadShader(
@@ -62,6 +62,20 @@ namespace Cocoa::Assets
 			record.Id,
 			source.Vertex,
 			source.Fragment
+		);
+	}
+
+	Graphics::MaterialHandle ResourceLoader::LoadMaterial(const std::string& materialId) const
+	{
+		const MaterialRecord& record = m_assetDatabase.GetMaterialInfo(materialId);
+		const Graphics::ShaderHandle shaderHandle = LoadShader(record.ShaderId);
+		const Graphics::TextureHandle textureHandle = LoadTexture(record.TextureId);
+		
+		return m_materialManager.Load(
+			materialId,
+			shaderHandle,
+			textureHandle,
+			record.Tint
 		);
 	}
 }
