@@ -2,6 +2,8 @@
 #include "Stubs/Graphics/StubTexture2D.hpp"
 #include <Graphics/TextureManager.hpp>
 #include <Graphics/TextureSpec.hpp>
+#include <Graphics/GraphicsHandles.hpp>
+
 #include <gtest/gtest.h>
 #include <stdexcept>
 

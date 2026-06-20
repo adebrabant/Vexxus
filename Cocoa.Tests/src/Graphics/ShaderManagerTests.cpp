@@ -1,6 +1,8 @@
 #include "Stubs/Graphics/StubGraphicsDevice.hpp"
 #include "Stubs/Graphics/StubShader.hpp"
 #include <Graphics/ShaderManager.hpp>
+#include <Graphics/GraphicsHandles.hpp>
+
 #include <gtest/gtest.h>
 #include <stdexcept>
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Memory.hpp"
+#include "Graphics/GraphicsHandles.hpp"
 
 #include <cstdint>
 #include <unordered_map>
@@ -11,11 +12,6 @@ namespace Cocoa::Graphics
 	class GraphicsDevice;
 	class Texture2D;
 	struct TextureSpec;
-
-	struct TextureHandle
-	{
-		uint32_t Id;
-	};
 
 	class TextureManager
 	{
