@@ -1,7 +1,6 @@
 #include <Core/Color.hpp>
 #include <Graphics/MaterialManager.hpp>
-#include <Graphics/ShaderManager.hpp>
-#include <Graphics/TextureManager.hpp>
+#include <Graphics/GraphicsHandles.hpp>
 
 #include <gtest/gtest.h>
 #include <stdexcept>

@@ -23,6 +23,7 @@ set(COCOA_PUBLIC_HEADERS
     include/Graphics/ShaderManager.hpp
     include/Graphics/MaterialManager.hpp
     include/Graphics/Material.hpp
+    include/Graphics/GraphicsHandles.hpp
 
     include/Assets/AssetManager.hpp
     include/Assets/AssetLoader.hpp

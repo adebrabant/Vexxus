@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Memory.hpp"
+#include "Graphics/GraphicsHandles.hpp"
 
 #include <string>
 #include <cstdint>
@@ -10,11 +11,6 @@ namespace Cocoa::Graphics
 {
 	class GraphicsDevice;
 	class Shader;
-
-	struct ShaderHandle
-	{
-		uint32_t Id;
-	};
 
 	class ShaderManager
 	{

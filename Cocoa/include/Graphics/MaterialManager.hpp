@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics/Material.hpp"
+#include "Graphics/GraphicsHandles.hpp"
 
 #include <string>
 #include <cstdint>
@@ -15,11 +16,6 @@ namespace Cocoa::Graphics
 {
 	struct TextureHandle;
 	struct ShaderHandle;
-
-	struct MaterialHandle
-	{
-		uint32_t Id;
-	};
 
 	class MaterialManager
 	{
