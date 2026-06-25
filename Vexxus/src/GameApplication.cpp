@@ -1,13 +1,19 @@
 #include "GameApplication.hpp"
-#include "Core/Application.hpp"
 #include "Scenes/TestScene.hpp"
+#include <Core/Application.hpp>
+#include <Scenes/SceneManager.hpp>
 
 namespace Vexxus
 {
 	GameApplication::GameApplication() 
 		: Application(800, 600, "Vexxus")
 	{
-		m_sceneManager.AddScene<TestScene>();
-		m_sceneManager.SetScene<TestScene>();
+
+	}
+
+	void GameApplication::ConfigureScenes(Cocoa::Scenes::SceneManager& sceneManager)
+	{
+		sceneManager.AddScene<TestScene>();
+		sceneManager.SetScene<TestScene>();
 	}
 }

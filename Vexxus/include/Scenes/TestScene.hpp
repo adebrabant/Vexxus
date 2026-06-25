@@ -9,10 +9,7 @@ namespace Vexxus
 	public:
 		TestScene() = default;
 		~TestScene() = default;
-		void Load() override;
-		void Unload() override;
-
-	private:
-
+		void Load(Cocoa::Assets::ResourceLoader& loader) override;
+		void Unload(Cocoa::Assets::ResourceLoader& loader) override;
 	};
 }

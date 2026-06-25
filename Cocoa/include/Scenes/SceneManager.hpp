@@ -1,17 +1,27 @@
 #pragma once
 
 #include "Scenes/Scene.hpp"
-#include "Graphics/Renderer2D.hpp"
 #include <vector>
+// ToDo: Remove for Memory.hpp
 #include <memory>
 #include <type_traits>
+
+namespace Cocoa::Assets
+{
+	class ResourceLoader;
+}
+
+namespace Cocoa::Graphics
+{
+	class Renderer2D;
+}
 
 namespace Cocoa::Scenes
 {
 	class SceneManager
 	{
 	public:
-		SceneManager() = default;
+		SceneManager(Assets::ResourceLoader& loader);
 		~SceneManager() = default;
 		Scene* GetCurrentScene();
 		void FixedUpdate(float fixedDeltaTime);
@@ -26,6 +36,7 @@ namespace Cocoa::Scenes
 
 	private:
 		std::vector<std::unique_ptr<Scene>> m_scenes;
+		Assets::ResourceLoader& m_resourceLoader;
 		Scene* m_currentScene = nullptr;
 	};
 
@@ -43,12 +54,12 @@ namespace Cocoa::Scenes
 			return;
 
 		if (m_currentScene)
-			m_currentScene->Unload();
+			m_currentScene->Unload(m_resourceLoader);
 
 		m_currentScene = newScene;
 
 		if (m_currentScene)
-			m_currentScene->Load();
+			m_currentScene->Load(m_resourceLoader);
 	}
 
 	template<typename TScene>

@@ -1,9 +1,16 @@
 #include "Scenes/SceneManager.hpp"
 #include "Graphics/Renderer2D.hpp"
+#include "Assets/ResourceLoader.hpp"
 #include "Scenes/Scene.hpp"
 
 namespace Cocoa::Scenes
 {
+	SceneManager::SceneManager(Assets::ResourceLoader& loader) 
+		: m_resourceLoader(loader)
+	{
+
+	}
+
 	Scene* SceneManager::GetCurrentScene()
 	{
 		return m_currentScene;
