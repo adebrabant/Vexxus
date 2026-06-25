@@ -1,13 +1,11 @@
 #pragma once
 
-#include "Scenes/Systems/ISystem.hpp"
-#include "Scenes/ECS/World.hpp"
-#include "Graphics/Renderer2D.hpp"
+#include "Scenes/Systems/System.hpp"
 #include "Inputs/InputHandler.hpp"
 
 namespace Vexxus::Systems
 {
-	class InputSystem : public Cocoa::Scenes::ISystem
+	class InputSystem : public Cocoa::Scenes::System
 	{
 	public:
 		InputSystem();
