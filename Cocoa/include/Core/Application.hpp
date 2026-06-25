@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Scenes/SceneManager.hpp"
 #include "Chronos/FrameClock.hpp"
 #include "Assets/AssetPathProvider.hpp"
 #include "Platforms/WindowProperties.hpp"
@@ -13,9 +12,13 @@ namespace Cocoa::Graphics
 	class Renderer2D;
 }
 
+namespace Cocoa::Scenes
+{
+	class SceneManager;
+}
+
 namespace Cocoa::Core
 {
-
 	class Application
 	{
 	public:
@@ -23,12 +26,12 @@ namespace Cocoa::Core
 		void Run();
 
 	protected:
-		void FixedUpdate(float fixedDeltaTime);
-		void Update(float deltaTime);
-		void Render(Graphics::Renderer2D& renderer, float alpha);
+		void FixedUpdate(Scenes::SceneManager& sceneManager, float fixedDeltaTime);
+		void Update(Scenes::SceneManager& sceneManager, float deltaTime);
+		void Render(Scenes::SceneManager& sceneManager, Graphics::Renderer2D& renderer, float alpha);
 
-	protected:
-		Scenes::SceneManager m_sceneManager;
+		// ToDo: Need to come back to this
+		virtual void ConfigureScenes(Scenes::SceneManager& sceneManager);
 
 	private:
 		Assets::AssetPathProvider m_assetPathProvider;

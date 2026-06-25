@@ -1,13 +1,15 @@
 #include "Core/Application.hpp"
 #include "Assets/AssetManager.hpp"
 #include "Assets/JsonAssetDatabase.hpp"
-#include "Platforms/WindowProperties.hpp"
+#include "Assets/ResourceLoader.hpp"
 #include "Platforms/GLFW/GLFWWindow.hpp"
 #include "Graphics/OpenGL/OpenGLContext.hpp"
 #include "Graphics/OpenGL/OpenGLGraphicsDevice.hpp"
 #include "Graphics/Renderer2D.hpp"
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
+#include "Graphics/MaterialManager.hpp"
+#include "Scenes/SceneManager.hpp"
 
 #include <utility>
 #include <string>
@@ -17,7 +19,6 @@ namespace Cocoa::Core
 {
 	Application::Application(uint32_t windowWidth, uint32_t windowHeight, const std::string& title) :
         m_assetPathProvider(),
-		m_sceneManager(),
 		m_frameClock(0.25f, 1.0f / 60.0f),
         m_windowProps(windowWidth, windowHeight, title)
 	{
@@ -34,9 +35,29 @@ namespace Cocoa::Core
 
         Assets::AssetManager assetManager(m_assetPathProvider.GetAssetsPath());
         Assets::JsonAssetDatabase jsonAssetDatabase(m_assetPathProvider.GetMetaDataPath());
+
         Graphics::ShaderManager shaderManager(graphicsDevice);
-        Graphics::TextureManager textureManger(graphicsDevice);
-        Graphics::Renderer2D renderer2d(graphicsDevice, shaderManager, textureManger, assetManager, jsonAssetDatabase);
+        Graphics::TextureManager textureManager(graphicsDevice);
+        Graphics::MaterialManager materialManager;
+
+        Assets::ResourceLoader resourceLoader(
+            jsonAssetDatabase,
+            assetManager,
+            textureManager,
+            shaderManager,
+            materialManager
+        );
+
+        Graphics::Renderer2D renderer2d(
+            graphicsDevice, 
+            shaderManager,
+            textureManager, 
+            materialManager
+        );
+
+        Scenes::SceneManager sceneManager(resourceLoader);
+
+        ConfigureScenes(sceneManager);
 
         m_frameClock.Reset();
 
@@ -45,15 +66,15 @@ namespace Cocoa::Core
             m_frameClock.Tick();
             while (m_frameClock.CanUpdate())
             {
-                FixedUpdate(m_frameClock.GetFixedDelta());
+                FixedUpdate(sceneManager, m_frameClock.GetFixedDelta());
                 m_frameClock.ConsumeUpdate();
             }
 
-            Update(m_frameClock.GetDelta());
+            Update(sceneManager, m_frameClock.GetDelta());
 
             graphicsDevice.BeginFrame();
             graphicsDevice.Clear();
-            Render(renderer2d, m_frameClock.GetAlpha());
+            Render(sceneManager, renderer2d, m_frameClock.GetAlpha());
             graphicsDevice.EndFrame();
 
             window.OnUpdate();
@@ -61,20 +82,25 @@ namespace Cocoa::Core
         }
     }
 
-    void Application::FixedUpdate(float fixedDeltaTime)
+    void Application::FixedUpdate(Scenes::SceneManager& sceneManager, float fixedDeltaTime)
     {
-        m_sceneManager.FixedUpdate(fixedDeltaTime);
+        sceneManager.FixedUpdate(fixedDeltaTime);
     }
 
-	void Application::Update(float deltaTime)
+	void Application::Update(Scenes::SceneManager& sceneManager, float deltaTime)
 	{
-		m_sceneManager.Update(deltaTime);
+        sceneManager.Update(deltaTime);
 	}
 
-	void Application::Render(Graphics::Renderer2D& renderer, float alpha)
+	void Application::Render(Scenes::SceneManager& sceneManager, Graphics::Renderer2D& renderer, float alpha)
 	{
         renderer.BeginScene();
-		//m_sceneManager.Render(*m_renderer, alpha);
+		sceneManager.Render(renderer, alpha);
         renderer.EndScene();
 	}
+
+    void Application::ConfigureScenes(Scenes::SceneManager& sceneManager)
+    {
+
+    }
 }

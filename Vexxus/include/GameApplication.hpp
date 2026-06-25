@@ -8,5 +8,8 @@ namespace Vexxus
 	{
 	public:
 		GameApplication();
+
+	protected:
+		void ConfigureScenes(Cocoa::Scenes::SceneManager& sceneManager) override;
 	};
 }
