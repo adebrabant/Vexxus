@@ -90,4 +90,31 @@ namespace Cocoa::Graphics::Tests
             std::runtime_error
         );
     }
+
+    TEST(ShaderManagerTests, TryGetHandle_ShouldReturnTrueAndOutHandle_WhenIdExists)
+    {
+        Stubs::StubGraphicsDevice stubGraphicsDevice;
+        Graphics::ShaderManager sut(stubGraphicsDevice);
+        const std::string shaderId = "1";
+        ShaderHandle expectedHandle = sut.Load(shaderId, "default", "default");
+
+        ShaderHandle outHandle;
+        bool result = sut.TryGetHandle(shaderId, outHandle);
+
+        EXPECT_TRUE(result);
+        EXPECT_EQ(outHandle.Id, expectedHandle.Id);
+    }
+
+    TEST(ShaderManagerTests, TryGetHandle_ShouldReturnFalseAndOutHandle_WhenIdDoesNotExist)
+    {
+        Stubs::StubGraphicsDevice stubGraphicsDevice;
+        Graphics::ShaderManager sut(stubGraphicsDevice);
+        sut.Load("1", "default", "default");
+
+        ShaderHandle outHandle;
+        bool result = sut.TryGetHandle("badId", outHandle);
+
+        EXPECT_FALSE(result);
+        EXPECT_EQ(outHandle.Id, 0);
+    }
 }
