@@ -4,6 +4,7 @@ set(COCOA_TEST_HEADERS
     include/Stubs/Graphics/StubGraphicsDevice.hpp
     include/Stubs/Graphics/StubShader.hpp
     include/Stubs/Graphics/StubTexture2D.hpp
+    include/Helpers/TestFileReader.hpp
 )
 
 set(COCOA_TEST_SOURCES
