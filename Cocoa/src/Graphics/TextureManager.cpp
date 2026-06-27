@@ -2,9 +2,7 @@
 #include "Graphics/GraphicsDevice.hpp"
 #include "Graphics/TextureSpec.hpp"
 #include "Graphics/Texture2D.hpp"
-#include "Core/Memory.hpp"
 
-#include <string>
 #include <utility>
 #include <stdexcept>
 
@@ -58,5 +56,17 @@ namespace Cocoa::Graphics
 		}
 
 		return *it->second;
+	}
+
+	bool TextureManager::TryGetHandle(const std::string& id, TextureHandle& outHandle) const
+	{
+		if (auto it = m_handles.find(id); it != m_handles.end())
+		{
+			outHandle = it->second;
+			return true;
+		}
+
+		outHandle = TextureHandle{ .Id = 0 };
+		return false;
 	}
 }

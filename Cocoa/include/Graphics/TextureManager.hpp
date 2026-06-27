@@ -3,9 +3,9 @@
 #include "Core/Memory.hpp"
 #include "Graphics/GraphicsHandles.hpp"
 
+#include <string>
 #include <cstdint>
 #include <unordered_map>
-#include <string>
 
 namespace Cocoa::Graphics
 {
@@ -24,6 +24,7 @@ namespace Cocoa::Graphics
 
 		TextureHandle Load(const TextureSpec& spec, const void* pixels);
 		const Texture2D& Get(TextureHandle handle) const;
+		bool TryGetHandle(const std::string& id, TextureHandle& outHandle) const;
 
 	private:
 		GraphicsDevice& m_graphicsDevice;
