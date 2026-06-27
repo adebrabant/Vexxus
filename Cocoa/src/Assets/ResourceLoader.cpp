@@ -1,5 +1,6 @@
 #include "Assets/ResourceLoader.hpp"
 #include "Assets/AssetDatabase.hpp"
+#include "Assets/AssetSource.hpp"
 #include "Assets/AssetManager.hpp"
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/TextureManager.hpp"
@@ -8,19 +9,21 @@
 #include "Graphics/TextureSpec.hpp"
 #include "Assets/Image.hpp"
 
-#include <string>
 #include <cstdint>
+#include <vector>
 
 namespace Cocoa::Assets
 {
 	ResourceLoader::ResourceLoader(
 		AssetDatabase& assetDatabase, 
+		AssetSource& assetSource,
 		AssetManager& assetManager, 
 		Graphics::TextureManager& textureManager, 
 		Graphics::ShaderManager& shaderManager, 
 		Graphics::MaterialManager& materialManager
 	) :
 		m_assetDatabase(assetDatabase),
+		m_assetSource(assetSource),
 		m_assetManager(assetManager),
 		m_textureManager(textureManager),
 		m_shaderManager(shaderManager),
@@ -32,7 +35,14 @@ namespace Cocoa::Assets
 	Graphics::TextureHandle ResourceLoader::LoadTexture(const std::string& textureId) const
 	{
 		const TextureRecord& record = m_assetDatabase.GetTextureInfo(textureId);
-		const Image& image = m_assetManager.LoadImage(record.Path);
+
+		if (Graphics::TextureHandle handle; m_textureManager.TryGetHandle(record.Id, handle))
+			return handle;
+
+		const Image& image = m_assetManager.LoadImage(
+			record.Path,
+			m_assetSource.ReadBytes(record.Path)
+		);
 		const Graphics::TextureSpec spec
 		{
 			.Id = record.Id,
@@ -52,10 +62,14 @@ namespace Cocoa::Assets
 	Graphics::ShaderHandle ResourceLoader::LoadShader(const std::string& shaderId) const
 	{
 		const ShaderRecord& record = m_assetDatabase.GetShaderInfo(shaderId);
+
+		if (Graphics::ShaderHandle handle; m_shaderManager.TryGetHandle(record.Id, handle))
+			return handle;
+
 		const ShaderSource& source = m_assetManager.LoadShader(
 			record.Id,
-			record.VertexPath,
-			record.FragmentPath
+			m_assetSource.ReadBytes(record.VertexPath),
+			m_assetSource.ReadBytes(record.FragmentPath)
 		);
 
 		return m_shaderManager.Load(

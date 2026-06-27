@@ -14,6 +14,7 @@ namespace Cocoa::Graphics
 namespace Cocoa::Assets
 {
 	class AssetDatabase;
+	class AssetSource;
 	class AssetManager;
 
 	class ResourceLoader
@@ -21,6 +22,7 @@ namespace Cocoa::Assets
 	public:
 		ResourceLoader(
 			AssetDatabase& assetDatabase,
+			AssetSource& assetSource,
 			AssetManager& assetManager,
 			Graphics::TextureManager& textureManager,
 			Graphics::ShaderManager& shaderManager,
@@ -42,6 +44,7 @@ namespace Cocoa::Assets
 
 	private:
 		AssetDatabase& m_assetDatabase;
+		AssetSource& m_assetSource;
 		AssetManager& m_assetManager;
 		Graphics::TextureManager& m_textureManager;
 		Graphics::ShaderManager& m_shaderManager;

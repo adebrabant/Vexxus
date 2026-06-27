@@ -33,6 +33,8 @@ set(COCOA_PUBLIC_HEADERS
     include/Assets/AssetDatabase.hpp
     include/Assets/JsonAssetDatabase.hpp
     include/Assets/ResourceLoader.hpp
+    include/Assets/AssetSource.hpp
+    include/Assets/FilesystemAssetSource.hpp
 
     include/Scenes/SceneManager.hpp
     include/Scenes/Scene.hpp
@@ -90,6 +92,7 @@ set(COCOA_PRIVATE_SOURCES
     src/Assets/AssetPathProvider.cpp
     src/Assets/JsonAssetDatabase.cpp
     src/Assets/ResourceLoader.cpp
+    src/Assets/FilesystemAssetSource.cpp
 
     src/Scenes/SceneManager.cpp
     src/Scenes/Scene.cpp

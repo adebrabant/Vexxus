@@ -27,6 +27,7 @@ namespace Cocoa::Graphics
 			const std::string& fragmentSource
 		);
 		const Shader& Get(ShaderHandle handle) const;
+		const bool TryGetHandle(const std::string& id, ShaderHandle& outHandle) const;
 
 	private:
 		GraphicsDevice& m_graphicsDevice;

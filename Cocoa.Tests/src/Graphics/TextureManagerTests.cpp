@@ -99,4 +99,32 @@ namespace Cocoa::Graphics::Tests
             std::runtime_error
         );
     }
+
+    TEST(TextureManagerTests, TryGetHandle_ShouldReturnTrueAndOutHandle_WhenIdExists)
+    {
+        Stubs::StubGraphicsDevice stubGraphicsDevice;
+        Graphics::TextureManager sut(stubGraphicsDevice);
+        Graphics::TextureSpec spec{ .Id = "default" };
+        TextureHandle expectedHandle = sut.Load(spec, "pixels");
+
+        TextureHandle outHandle;
+        bool result = sut.TryGetHandle(spec.Id, outHandle);
+
+        EXPECT_TRUE(result);
+        EXPECT_EQ(outHandle.Id, expectedHandle.Id);
+    }
+
+    TEST(TextureManagerTests, TryGetHandle_ShouldReturnFalseAndOutHandle_WhenIdDoesNotExist)
+    {
+        Stubs::StubGraphicsDevice stubGraphicsDevice;
+        Graphics::TextureManager sut(stubGraphicsDevice);
+        Graphics::TextureSpec spec{ .Id = "default" };
+        sut.Load(spec, "pixels");
+
+        TextureHandle outHandle;
+        bool result = sut.TryGetHandle("badId", outHandle);
+
+        EXPECT_FALSE(result);
+        EXPECT_EQ(outHandle.Id, 0);
+    }
 }

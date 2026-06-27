@@ -4,8 +4,6 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <filesystem>
-#include <string.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
@@ -16,7 +14,7 @@ namespace Cocoa::Assets
 		stbi_set_flip_vertically_on_load(true);
 	}
 
-	Image AssetLoader::Load(const std::filesystem::path& path) const
+	Image AssetLoader::LoadImage(const std::filesystem::path& path) const
 	{
 		Image image;
 		int width = 0;
@@ -50,7 +48,42 @@ namespace Cocoa::Assets
 		return image;
 	}
 
-	std::string AssetLoader::LoadTextFile(const std::filesystem::path& path) const
+	Image AssetLoader::LoadImage(const std::vector<std::byte>& bytes) const
+	{
+		Image image;
+		int width = 0;
+		int height = 0;
+		int channels = 0;
+
+		unsigned char* data = stbi_load_from_memory(
+			reinterpret_cast<const unsigned char*>(bytes.data()),
+			static_cast<int>(bytes.size()),
+			&width,
+			&height,
+			&channels,
+			4
+		);
+
+		if (!data)
+		{
+			return image;
+		}
+
+		image.Width = width;
+		image.Height = height;
+		image.Channels = 4;
+
+		const size_t size = static_cast<size_t>(width) * height * 4;
+
+		image.Pixels.resize(size);
+		std::memcpy(image.Pixels.data(), data, size);
+
+		stbi_image_free(data);
+
+		return image;
+	}
+
+	std::string AssetLoader::LoadText(const std::filesystem::path& path) const
 	{
 		std::ifstream file(path, std::ios::in | std::ios::binary);
 
@@ -65,5 +98,16 @@ namespace Cocoa::Assets
 		contents << file.rdbuf();
 
 		return contents.str();
+	}
+
+	std::string AssetLoader::LoadText(const std::vector<std::byte>& bytes) const
+	{
+		if (bytes.empty())
+			return std::string();
+
+		return std::string(
+			reinterpret_cast<const char*>(bytes.data()),
+			bytes.size()
+		);
 	}
 }

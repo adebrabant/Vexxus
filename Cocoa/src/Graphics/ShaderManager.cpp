@@ -1,9 +1,7 @@
 #include "Graphics/ShaderManager.hpp"
 #include "Graphics/GraphicsDevice.hpp"
 #include "Graphics/Shader.hpp"
-#include "Core/Memory.hpp"
 
-#include <string>
 #include <utility>
 #include <stdexcept>
 
@@ -55,5 +53,17 @@ namespace Cocoa::Graphics
 		}
 
 		return *it->second;
+	}
+
+	const bool ShaderManager::TryGetHandle(const std::string& id, ShaderHandle& outHandle) const
+	{
+		if (auto it = m_handles.find(id); it != m_handles.end())
+		{
+			outHandle = it->second;
+			return true;
+		}
+
+		outHandle = ShaderHandle{ .Id = 0 };
+		return false;
 	}
 }

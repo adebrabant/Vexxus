@@ -1,5 +1,6 @@
 #include <Assets/ResourceLoader.hpp>
 #include <Assets/JsonAssetDatabase.hpp>
+#include <Assets/FilesystemAssetSource.hpp>
 #include <Assets/AssetManager.hpp>
 #include <Graphics/ShaderManager.hpp>
 #include <Graphics/TextureManager.hpp>
@@ -19,13 +20,15 @@ namespace Cocoa::Assets::Tests
 	TEST(ResourceLoaderTests, LoadTexture_ShouldReturnTextureHandle_WhenProvidingAssetTextureId)
 	{
 		Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
-		Assets::AssetManager assetManager(testResourcePath);
+		Assets::FilesystemAssetSource assetSource(testResourcePath);
+		Assets::AssetManager assetManager;
 		Stubs::StubGraphicsDevice stubGraphicsDevice;
 		Graphics::TextureManager textureManager(stubGraphicsDevice);
 		Graphics::ShaderManager shaderManager(stubGraphicsDevice);
 		Graphics::MaterialManager materialManager;
 		Assets::ResourceLoader sut(
 			jsonDatabase,
+			assetSource,
 			assetManager,
 			textureManager,
 			shaderManager,
@@ -40,13 +43,15 @@ namespace Cocoa::Assets::Tests
 	TEST(ResourceLoaderTests, LoadShader_ShouldReturnShaderHandle_WhenProvidingShaderId)
 	{
 		Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
-		Assets::AssetManager assetManager(testResourcePath);
+		Assets::FilesystemAssetSource assetSource(testResourcePath);
+		Assets::AssetManager assetManager;
 		Stubs::StubGraphicsDevice stubGraphicsDevice;
 		Graphics::TextureManager textureManager(stubGraphicsDevice);
 		Graphics::ShaderManager shaderManager(stubGraphicsDevice);
 		Graphics::MaterialManager materialManager;
 		Assets::ResourceLoader sut(
 			jsonDatabase,
+			assetSource,
 			assetManager,
 			textureManager,
 			shaderManager,
@@ -61,13 +66,15 @@ namespace Cocoa::Assets::Tests
 	TEST(ResourceLoaderTests, LoadMaterial_ShouldReturnMaterialHandle_WhenProvidingMaterialId)
 	{
 		Assets::JsonAssetDatabase jsonDatabase(testMetadataPath);
-		Assets::AssetManager assetManager(testResourcePath);
+		Assets::FilesystemAssetSource assetSource(testResourcePath);
+		Assets::AssetManager assetManager;
 		Stubs::StubGraphicsDevice stubGraphicsDevice;
 		Graphics::TextureManager textureManager(stubGraphicsDevice);
 		Graphics::ShaderManager shaderManager(stubGraphicsDevice);
 		Graphics::MaterialManager materialManager;
 		Assets::ResourceLoader sut(
 			jsonDatabase,
+			assetSource,
 			assetManager,
 			textureManager,
 			shaderManager,

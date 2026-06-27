@@ -2,6 +2,7 @@
 #include "Assets/AssetManager.hpp"
 #include "Assets/JsonAssetDatabase.hpp"
 #include "Assets/ResourceLoader.hpp"
+#include "Assets/FilesystemAssetSource.hpp"
 #include "Platforms/GLFW/GLFWWindow.hpp"
 #include "Graphics/OpenGL/OpenGLContext.hpp"
 #include "Graphics/OpenGL/OpenGLGraphicsDevice.hpp"
@@ -33,7 +34,8 @@ namespace Cocoa::Core
         graphicsDevice.SetViewport(window.GetWidth(), window.GetHeight());
         graphicsDevice.SetClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
-        Assets::AssetManager assetManager(m_assetPathProvider.GetAssetsPath());
+        Assets::AssetManager assetManager;
+        Assets::FilesystemAssetSource assetSource(m_assetPathProvider.GetAssetsPath());
         Assets::JsonAssetDatabase jsonAssetDatabase(m_assetPathProvider.GetMetaDataPath());
 
         Graphics::ShaderManager shaderManager(graphicsDevice);
@@ -42,6 +44,7 @@ namespace Cocoa::Core
 
         Assets::ResourceLoader resourceLoader(
             jsonAssetDatabase,
+            assetSource,
             assetManager,
             textureManager,
             shaderManager,
