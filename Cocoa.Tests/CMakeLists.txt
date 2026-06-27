@@ -10,10 +10,13 @@ set(COCOA_TEST_SOURCES
     src/Chronos/FrameClockTests.cpp
     src/Scenes/SceneManagerTests.cpp
     src/Platforms/WindowPropertiesTests.cpp
+
     src/Assets/JsonDatabaseTests.cpp
     src/Assets/AssetLoaderTests.cpp
     src/Assets/AssetManagerTests.cpp
     src/Assets/ResourceLoaderTests.cpp
+    src/Assets/FilesystemAssetSourceTests.cpp
+
     src/Graphics/TextureSpecTests.cpp
     src/Graphics/ShaderManagerTests.cpp
     src/Graphics/TextureManagerTests.cpp
@@ -67,13 +70,22 @@ target_link_libraries(${COCOA_TESTS_TARGET_NAME}
 )
 
 add_custom_command(TARGET ${COCOA_TESTS_TARGET_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E rm -rf
+        "$<TARGET_FILE_DIR:${COCOA_TESTS_TARGET_NAME}>/TestData"
+
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/TestData
-        $<TARGET_FILE_DIR:${COCOA_TESTS_TARGET_NAME}>/TestData
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/TestData"
+        "$<TARGET_FILE_DIR:${COCOA_TESTS_TARGET_NAME}>/TestData"
+
+    COMMENT "Copying Cocoa test data"
+    VERBATIM
 )
 
-add_test(NAME Cocoa.Tests COMMAND ${COCOA_TESTS_TARGET_NAME})
+add_test(
+    NAME Cocoa.Tests
+    COMMAND ${COCOA_TESTS_TARGET_NAME}
+)
 
 set_tests_properties(Cocoa.Tests PROPERTIES
-    WORKING_DIRECTORY $<TARGET_FILE_DIR:${COCOA_TESTS_TARGET_NAME}>
+    WORKING_DIRECTORY "$<TARGET_FILE_DIR:${COCOA_TESTS_TARGET_NAME}>"
 )
