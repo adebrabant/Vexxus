@@ -7,10 +7,10 @@ namespace Cocoa::Assets
 {
     AssetPathProvider::AssetPathProvider()
     {
-        m_assetPath = FindPath("Assets");
+        m_assetPath = FindPath("resources");
 
         if (!m_assetPath.empty())
-            m_metadataPath = m_assetPath / "Metadata";
+            m_metadataPath = m_assetPath / "metadata";
     }
 
     std::filesystem::path AssetPathProvider::FindPath(const std::string& path)
@@ -33,12 +33,12 @@ namespace Cocoa::Assets
                     return path;
             }
 
-            std::cerr << "Warning: Assets folder not found! Using default values." << std::endl;
+            std::cerr << "Warning: Resources folder not found! Using default values." << std::endl;
             return {};
         }
         catch (const std::filesystem::filesystem_error& e)
         {
-            std::cerr << "Error locating Assets folder: " << e.what() << std::endl;
+            std::cerr << "Error locating Resources folder: " << e.what() << std::endl;
             return {};
         }
     }

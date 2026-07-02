@@ -1,6 +1,6 @@
 {
-  "werewolf-idle1": {
-    "path": "Textures/werewolf-idle1.png",
+  "default_texture": {
+    "path": "textures/default-01.png",
     "format": "RGBA8",
     "minFilter": "Linear",
     "magFilter": "Linear",

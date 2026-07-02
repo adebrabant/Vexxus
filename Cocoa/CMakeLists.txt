@@ -108,9 +108,21 @@ set(COCOA_PRIVATE_SOURCES
     src/Inputs/InputHandler.cpp
 )
 
+set(COCOA_RESOURCES
+    resources/metadata/materials.json
+    resources/metadata/shaders.json
+    resources/metadata/textures.json
+
+    resources/shaders/sprite_default.vert
+    resources/shaders/sprite_default.frag
+
+    resources/textures/default-01.png
+)
+
 add_library(${COCOA_TARGET_NAME}
     ${COCOA_PUBLIC_HEADERS}
     ${COCOA_PRIVATE_SOURCES}
+    ${COCOA_RESOURCES}
 )
 
 source_group(
@@ -123,6 +135,12 @@ source_group(
     TREE ${CMAKE_CURRENT_SOURCE_DIR}/src
     PREFIX "Source Files"
     FILES ${COCOA_PRIVATE_SOURCES}
+)
+
+source_group(
+    TREE ${CMAKE_CURRENT_SOURCE_DIR}/resources
+    PREFIX "Resource Files"
+    FILES ${COCOA_RESOURCES}
 )
 
 target_include_directories(${COCOA_TARGET_NAME}
